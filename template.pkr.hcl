@@ -1,3 +1,4 @@
+
 source "virtualbox-iso" "example" {
   boot_command = [
     "c<wait>",
@@ -20,11 +21,14 @@ source "virtualbox-iso" "example" {
   cpus             = 2
   output_directory = "./output-theplant-kakuyasu-ec-vpn"
   shutdown_command = "sudo -s shutdown -p now"
-  ssh_password     = "ubuntu"
+  ssh_password     = "changeme"
   ssh_username     = "ubuntu"
   ssh_wait_timeout = "10000s"
   vm_name          = "theplant-kakuyasu-ec-vpn"
+
   vboxmanage = [
+    # Allow the VM to access Packer HTTP directory
+    # https://github.com/hashicorp/packer/issues/12118#issuecomment-1337627122
     ["modifyvm", "{{.Name}}", "--nat-localhostreachable1", "on"],
   ]
 }
